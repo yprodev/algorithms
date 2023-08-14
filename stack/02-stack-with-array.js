@@ -26,5 +26,5 @@ class FixedCapacityStackOfStrings {
   }
 }
 
-module.exports = LinkedStackOfStrings;
+module.exports = FixedCapacityStackOfStrings;
 
