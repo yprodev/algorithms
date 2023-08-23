@@ -8,6 +8,14 @@
  * Goal: Given two sorted subarrays a[lo] to a[mid] and a[mid + 1] to a[hi],
  * replace with sorted subarray a[lo] to a[hi]
  *
+ * Proposition: mergesort uses at most N lg N compares and 6 N lg N Array
+ * accesses to sort any array of size N.
+ *
+ * Divide-and-conquer recurrence: proof by picture
+ *
+ * Use insertions sort for small subarrays.
+ *  - Mergesort has too much overhead for tiny subarrays
+ *  - Cutoff to insertion sort for ~7 items.
  *
  */
 
@@ -37,5 +45,29 @@ function merge(array, auxilaryArray, lo, mid, hi) {
   /*
     * postcondition: a[lo..hi]      sorted
     */
+}
+
+
+function sort(array) {
+  let auxilaryArray = new Array(array.length);
+
+  sort(array, auxilaryArray, 0, array.length - 1);
+}
+
+// Overloading (should be in class)
+function sort(array, auxilaryArray, lo, hi) {
+  if (hi <= lo) return;
+
+  let mid = lo + (hi - lo) / 2;
+
+  sort(array, auxilaryArray, lo, mid);
+  sort(array, auxilaryArray, mid + 1, hi);
+
+  // Stop if already sorted
+  // Is biggest item in first half =< smallest item in second half?
+  // Helps for partially-ordered arrays.
+  if (!less(a[mid + 1], a[mid])) return;
+
+  merge(array, auxilaryArray, lo, mid, hi);
 }
 
