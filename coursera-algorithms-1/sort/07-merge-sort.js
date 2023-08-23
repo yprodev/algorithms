@@ -71,3 +71,29 @@ function sort(array, auxilaryArray, lo, hi) {
   merge(array, auxilaryArray, lo, mid, hi);
 }
 
+
+/*
+ * Bottom-up mergesort
+ *
+ * Basic plan
+ *  - Pass through array, merging subarrays of size 1
+ *  - Repeat for subarrays of size 2, 4, 8, 16, ...
+ *
+ * Bottom line: no recursion needed
+ * Bottom line: concise industrial-strength code, if you have the space
+ *
+ */
+
+function sort_without_recursion(array) {
+  let len = array.length;
+  let auxilaryArray = new Array(len);
+
+  for (let size = 1; size < len; sz = sz + sz) {
+    for (let lo = 0; lo < len - sz; lo += sz + sz) {
+      merge(array, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, len - 1));
+    }
+  }
+
+}
+
+
